@@ -243,6 +243,41 @@ Bedesten API   Bedesten API   Dual/Triple API   Norm+Bireysel API
 <details>
 <summary>🌐 <strong>Web Service / ASGI Deployment</strong></summary>
 
+## 🚢 Coolify ile Docker Deployment
+
+Yargi MCP Server'ı Coolify platformunda Docker ile kolayca deploy edebilirsiniz:
+
+### Hızlı Başlangıç
+
+1. **Repository'yi Coolify'a bağlayın**
+2. **Docker Compose Service** olarak oluşturun
+3. **Compose File**: `docker-compose.coolify.yml`
+4. **Service**: `yargi-mcp`
+
+### Environment Variables
+```bash
+# Temel ayarlar
+BASE_URL=https://your-app.coolify.io
+ALLOWED_ORIGINS=*
+LOG_LEVEL=info
+
+# Authentication (opsiyonel)
+ENABLE_AUTH=false
+```
+
+### 📖 Detaylı Deployment Rehberi
+
+Kapsamlı deployment rehberi için: **[COOLIFY_DEPLOYMENT.md](./COOLIFY_DEPLOYMENT.md)**
+
+Bu rehberde:
+- ✅ Adım adım Coolify setup
+- 🔧 Environment variables ayarlama  
+- 🔐 SSL/Domain yapılandırma
+- 🛠️ Troubleshooting
+- 📊 Monitoring
+
+---
+
 Yargı MCP artık web servisi olarak da çalıştırılabilir! ASGI desteği sayesinde:
 
 - **Web API olarak erişim**: HTTP endpoint'leri üzerinden MCP araçlarına erişim

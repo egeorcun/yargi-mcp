@@ -1,0 +1,88 @@
+version: '3.8'
+
+# Coolify optimized docker-compose for Yargi MCP Server
+# This configuration is specifically designed for deployment on Coolify.io
+
+services:
+  yargi-mcp:
+    build: .
+    image: yargi-mcp:latest
+    container_name: yargi-mcp-server
+    
+    # Port mapping - Coolify will handle external routing
+    ports:
+      - "${PORT:-8000}:8000"
+    
+    # Environment variables
+    environment:
+      # Core application settings
+      - HOST=0.0.0.0
+      - PORT=8000
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      
+      # CORS and security
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-*}
+      - BASE_URL=${BASE_URL:-https://your-app.coolify.io}
+      
+      # Authentication (Coolify secrets recommended)
+      - ENABLE_AUTH=${ENABLE_AUTH:-false}
+      - CLERK_SECRET_KEY=${CLERK_SECRET_KEY:-}
+      - CLERK_PUBLISHABLE_KEY=${CLERK_PUBLISHABLE_KEY:-}
+      - CLERK_ISSUER=${CLERK_ISSUER:-}
+      
+      # Optional: API token for authenticated access
+      - API_TOKEN=${API_TOKEN:-}
+      
+      # Database connections (if needed in future)
+      - DATABASE_URL=${DATABASE_URL:-}
+      - REDIS_URL=${REDIS_URL:-}
+    
+    # Volume mounts for persistent data
+    volumes:
+      # Persistent logs directory
+      - yargi_logs:/app/logs
+      # Optional: configuration override
+      - ./config:/app/config:ro
+    
+    # Resource limits for Coolify
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: '0.5'
+        reservations:
+          memory: 512M
+          cpus: '0.25'
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "python", "-c", "import httpx, os, sys; r=httpx.get(f'http://localhost:{os.getenv(\"PORT\",\"8000\")}/health'); sys.exit(0 if r.status_code==200 else 1)"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    
+    # Network
+    networks:
+      - coolify-network
+
+# Networks
+networks:
+  coolify-network:
+    driver: bridge
+
+# Volumes for persistent data
+volumes:
+  yargi_logs:
+    driver: local

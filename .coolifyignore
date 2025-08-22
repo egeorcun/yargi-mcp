@@ -1,0 +1,82 @@
+# Coolify ignore file - Optimize build context
+# Files and directories to ignore during Coolify deployment
+
+# Development files
+.env
+.env.local
+.env.development
+.env.test
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Documentation (optional - uncomment if you want to exclude)
+# *.md
+# docs/
+
+# Git
+.git/
+.gitignore
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# Logs (these are generated at runtime)
+logs/
+*.log
+
+# Test files
+tests/
+test_*.py
+*_test.py
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Cache directories
+.cache/
+.pytest_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+
+# Local development Docker
+docker-compose.override.yml
+
+# Duplicate directories (the saidsurucu-yargi-mcp-f5fa007 folder)
+saidsurucu-yargi-mcp-f5fa007/
+
+# Example files
+*.example
+example_*
