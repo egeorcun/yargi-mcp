@@ -7,11 +7,15 @@ services:
   yargi-mcp:
     build: .
     image: yargi-mcp:latest
-    container_name: yargi-mcp-server
+    # Note: Coolify handles container naming automatically
+    # container_name: yargi-mcp-server
     
     # Port mapping - Coolify will handle external routing
-    ports:
-      - "${PORT:-8000}:8000"
+    # Note: Remove ports mapping for Coolify - it handles routing automatically
+    # ports:
+    #   - "${PORT:-8000}:8000"
+    expose:
+      - "8000"
     
     # Environment variables
     environment:

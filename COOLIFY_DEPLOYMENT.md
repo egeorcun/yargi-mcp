@@ -167,10 +167,29 @@ curl https://your-app.coolify.io/.well-known/oauth-authorization-server
 
 ## 🛠️ Troubleshooting
 
+### ❌ Port Already Allocated Hatası
+**Hata**: `Bind for 0.0.0.0:8000 failed: port is already allocated`
+
+**Çözüm**: 
+1. `docker-compose.coolify.yml` dosyasında `ports` mapping'i kaldırın
+2. Sadece `expose: ["8000"]` kullanın
+3. Coolify otomatik port routing yapar
+
+```yaml
+# ❌ Yanlış
+ports:
+  - "8000:8000"
+
+# ✅ Doğru (Coolify için)
+expose:
+  - "8000"
+```
+
 ### Container Başlamıyor
 1. **Logs** sekmesinde hataları kontrol edin
-2. Port çakışması var mı kontrol edin
+2. Port çakışması var mı kontrol edin (yukarıya bakın)
 3. Environment variable'ları doğru mu kontrol edin
+4. Docker build hataları var mı kontrol edin
 
 ### Memory Issues
 ```bash
