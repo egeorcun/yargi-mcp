@@ -274,7 +274,7 @@ class EmsalSearchRequest(BaseModel):
     Provides access to precedent decisions from various Turkish courts.
     """
     keyword: str = Field(..., description="Search keyword across decision texts")
-    decision_year_karar: Optional[str] = Field(None, description="Decision year filter", example="2024")
+    decision_year_karar: Optional[str] = Field(None, description="Decision year filter (string)", example='"2024"')
     results_per_page: int = Field(20, description="Results per page", ge=1, le=100)
 
 class UyusmazlikSearchRequest(BaseModel):
@@ -291,8 +291,8 @@ class AnayasaNormSearchRequest(BaseModel):
     Turkey's highest constitutional authority for reviewing law constitutionality.
     """
     keywords_all: List[str] = Field(..., description="All required keywords", example=["eğitim hakkı", "anayasa"])
-    period: Optional[str] = Field(None, description="Constitutional period (1=1961, 2=1982)", example="2")
-    application_type: Optional[str] = Field(None, description="Application type (1=İptal)", example="1")
+    period: Optional[str] = Field(None, description="Constitutional period (1=1961, 2=1982)", example='"2"')
+    application_type: Optional[str] = Field(None, description="Application type (1=İptal)", example='"1"')
     results_per_page: int = Field(20, description="Results per page", ge=1, le=100)
 
 class AnayasaBireyselSearchRequest(BaseModel):
