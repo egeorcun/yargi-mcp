@@ -1,0 +1,713 @@
+{
+  "nodes": [
+    {
+      "width": 300,
+      "height": 259,
+      "id": "bufferMemory_1",
+      "position": {
+        "x": 574.094963825152,
+        "y": 591.4982729565736
+      },
+      "type": "customNode",
+      "data": {
+        "id": "bufferMemory_1",
+        "label": "Buffer Memory",
+        "version": 2,
+        "name": "bufferMemory",
+        "type": "BufferMemory",
+        "baseClasses": [
+          "BufferMemory",
+          "BaseChatMemory",
+          "BaseMemory"
+        ],
+        "category": "Memory",
+        "description": "Retrieve chat messages stored in database",
+        "inputParams": [
+          {
+            "label": "Session Id",
+            "name": "sessionId",
+            "type": "string",
+            "description": "If not specified, a random id will be used. Learn <a target=\"_blank\" href=\"https://docs.flowiseai.com/memory#ui-and-embedded-chat\">more</a>",
+            "default": "",
+            "additionalParams": true,
+            "optional": true,
+            "id": "bufferMemory_1-input-sessionId-string"
+          },
+          {
+            "label": "Memory Key",
+            "name": "memoryKey",
+            "type": "string",
+            "default": "chat_history",
+            "additionalParams": true,
+            "id": "bufferMemory_1-input-memoryKey-string"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "sessionId": "",
+          "memoryKey": "chat_history"
+        },
+        "outputAnchors": [
+          {
+            "id": "bufferMemory_1-output-bufferMemory-BufferMemory|BaseChatMemory|BaseMemory",
+            "name": "bufferMemory",
+            "label": "BufferMemory",
+            "type": "BufferMemory | BaseChatMemory | BaseMemory"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "positionAbsolute": {
+        "x": 574.094963825152,
+        "y": 591.4982729565736
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "stickyNote_0",
+      "position": {
+        "x": 1197.3578961103253,
+        "y": 117.43214592301385
+      },
+      "type": "stickyNote",
+      "data": {
+        "id": "stickyNote_0",
+        "label": "Sticky Note",
+        "version": 2,
+        "name": "stickyNote",
+        "type": "StickyNote",
+        "baseClasses": [
+          "StickyNote"
+        ],
+        "tags": [
+          "Utilities"
+        ],
+        "category": "Utilities",
+        "description": "Add a sticky note",
+        "inputParams": [
+          {
+            "label": "",
+            "name": "note",
+            "type": "string",
+            "rows": 1,
+            "placeholder": "Type something here",
+            "optional": true,
+            "id": "stickyNote_0-input-note-string"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "note": "LLM has to be function calling compatible"
+        },
+        "outputAnchors": [
+          {
+            "id": "stickyNote_0-output-stickyNote-StickyNote",
+            "name": "stickyNote",
+            "label": "StickyNote",
+            "description": "Add a sticky note",
+            "type": "StickyNote"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 62,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1197.3578961103253,
+        "y": 117.43214592301385
+      },
+      "dragging": false
+    },
+    {
+      "id": "customMCP_0",
+      "position": {
+        "x": -25.708472681715648,
+        "y": -564.0518717696136
+      },
+      "type": "customNode",
+      "data": {
+        "id": "customMCP_0",
+        "label": "Custom MCP",
+        "version": 1.1,
+        "name": "customMCP",
+        "type": "Custom MCP Tool",
+        "baseClasses": [
+          "Tool"
+        ],
+        "category": "Tools (MCP)",
+        "description": "Custom MCP Config",
+        "inputParams": [
+          {
+            "label": "MCP Server Config",
+            "name": "mcpServerConfig",
+            "type": "code",
+            "hideCodeExecute": true,
+            "hint": {
+              "label": "How to use",
+              "value": "\nYou can use variables in the MCP Server Config with double curly braces `{{ }}` and prefix `$vars.<variableName>`. \n\nFor example, you have a variable called \"var1\":\n```json\n{\n    \"command\": \"docker\",\n    \"args\": [\n        \"run\",\n        \"-i\",\n        \"--rm\",\n        \"-e\", \"API_TOKEN\"\n    ],\n    \"env\": {\n        \"API_TOKEN\": \"{{$vars.var1}}\"\n    }\n}\n```\n\nFor example, when using SSE, you can use the variable \"var1\" in the headers:\n```json\n{\n    \"url\": \"https://api.example.com/endpoint/sse\",\n    \"headers\": {\n        \"Authorization\": \"Bearer {{$vars.var1}}\"\n    }\n}\n```\n"
+            },
+            "placeholder": "{\n    \"command\": \"npx\",\n    \"args\": [\"-y\", \"@modelcontextprotocol/server-filesystem\", \"/path/to/allowed/files\"]\n}",
+            "id": "customMCP_0-input-mcpServerConfig-code",
+            "display": true
+          },
+          {
+            "label": "Available Actions",
+            "name": "mcpActions",
+            "type": "asyncMultiOptions",
+            "loadMethod": "listActions",
+            "refresh": true,
+            "id": "customMCP_0-input-mcpActions-asyncMultiOptions",
+            "display": true
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "mcpServerConfig": "{\n    \"url\": \"https://mcp.dosya.ai/mcp\",\n    \"headers\": {\n        \"Content-Type\": \"application/json\",\n        \"Accept\": \"application/json, text/event-stream\"\n    }\n}",
+          "mcpActions": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "customMCP_0-output-customMCP-Tool",
+            "name": "customMCP",
+            "label": "Custom MCP Tool",
+            "description": "Custom MCP Config",
+            "type": "Tool"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 1081,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -25.708472681715648,
+        "y": -564.0518717696136
+      },
+      "dragging": false
+    },
+    {
+      "id": "sequentialThinkingMCP_0",
+      "position": {
+        "x": -351.9144983896034,
+        "y": -565.5469451083561
+      },
+      "type": "customNode",
+      "data": {
+        "id": "sequentialThinkingMCP_0",
+        "label": "Sequential Thinking MCP",
+        "version": 1,
+        "name": "sequentialThinkingMCP",
+        "type": "Sequential Thinking MCP Tool",
+        "baseClasses": [
+          "Tool"
+        ],
+        "category": "Tools (MCP)",
+        "description": "MCP server that provides a tool for dynamic and reflective problem-solving through a structured thinking process",
+        "inputParams": [
+          {
+            "label": "Available Actions",
+            "name": "mcpActions",
+            "type": "asyncMultiOptions",
+            "loadMethod": "listActions",
+            "refresh": true,
+            "id": "sequentialThinkingMCP_0-input-mcpActions-asyncMultiOptions",
+            "display": true
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "mcpActions": "[\"sequentialthinking\"]"
+        },
+        "outputAnchors": [
+          {
+            "id": "sequentialThinkingMCP_0-output-sequentialThinkingMCP-Tool",
+            "name": "sequentialThinkingMCP",
+            "label": "Sequential Thinking MCP Tool",
+            "description": "MCP server that provides a tool for dynamic and reflective problem-solving through a structured thinking process",
+            "type": "Tool"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 320,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -351.9144983896034,
+        "y": -565.5469451083561
+      },
+      "dragging": false
+    },
+    {
+      "id": "toolAgent_0",
+      "position": {
+        "x": 1182.0805719733655,
+        "y": 200.67890556476976
+      },
+      "type": "customNode",
+      "data": {
+        "id": "toolAgent_0",
+        "label": "Tool Agent",
+        "version": 2,
+        "name": "toolAgent",
+        "type": "AgentExecutor",
+        "baseClasses": [
+          "AgentExecutor",
+          "BaseChain",
+          "Runnable"
+        ],
+        "category": "Agents",
+        "description": "Agent that uses Function Calling to pick the tools and args to call",
+        "inputParams": [
+          {
+            "label": "System Message",
+            "name": "systemMessage",
+            "type": "string",
+            "default": "You are a helpful AI assistant.",
+            "description": "If Chat Prompt Template is provided, this will be ignored",
+            "rows": 4,
+            "optional": true,
+            "additionalParams": true,
+            "id": "toolAgent_0-input-systemMessage-string",
+            "display": true
+          },
+          {
+            "label": "Max Iterations",
+            "name": "maxIterations",
+            "type": "number",
+            "optional": true,
+            "additionalParams": true,
+            "id": "toolAgent_0-input-maxIterations-number",
+            "display": true
+          },
+          {
+            "label": "Enable Detailed Streaming",
+            "name": "enableDetailedStreaming",
+            "type": "boolean",
+            "default": false,
+            "description": "Stream detailed intermediate steps during agent execution",
+            "optional": true,
+            "additionalParams": true,
+            "id": "toolAgent_0-input-enableDetailedStreaming-boolean",
+            "display": true
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Tools",
+            "name": "tools",
+            "type": "Tool",
+            "list": true,
+            "id": "toolAgent_0-input-tools-Tool",
+            "display": true
+          },
+          {
+            "label": "Memory",
+            "name": "memory",
+            "type": "BaseChatMemory",
+            "id": "toolAgent_0-input-memory-BaseChatMemory",
+            "display": true
+          },
+          {
+            "label": "Tool Calling Chat Model",
+            "name": "model",
+            "type": "BaseChatModel",
+            "description": "Only compatible with models that are capable of function calling: ChatOpenAI, ChatMistral, ChatAnthropic, ChatGoogleGenerativeAI, ChatVertexAI, GroqChat",
+            "id": "toolAgent_0-input-model-BaseChatModel",
+            "display": true
+          },
+          {
+            "label": "Chat Prompt Template",
+            "name": "chatPromptTemplate",
+            "type": "ChatPromptTemplate",
+            "description": "Override existing prompt with Chat Prompt Template. Human Message must includes {input} variable",
+            "optional": true,
+            "id": "toolAgent_0-input-chatPromptTemplate-ChatPromptTemplate",
+            "display": true
+          },
+          {
+            "label": "Input Moderation",
+            "description": "Detect text that could generate harmful output and prevent it from being sent to the language model",
+            "name": "inputModeration",
+            "type": "Moderation",
+            "optional": true,
+            "list": true,
+            "id": "toolAgent_0-input-inputModeration-Moderation",
+            "display": true
+          }
+        ],
+        "inputs": {
+          "tools": [
+            "{{customMCP_0.data.instance}}",
+            "{{sequentialThinkingMCP_0.data.instance}}",
+            "{{currentDateTime_0.data.instance}}"
+          ],
+          "memory": "{{bufferMemory_1.data.instance}}",
+          "model": "{{chatGoogleGenerativeAI_0.data.instance}}",
+          "chatPromptTemplate": "",
+          "systemMessage": "# Türk Hukuk AI Asistanı - System Prompt\n\n## 🎯 MİSYON\nSen Türk hukuk sistemi için geliştirilmiş profesyonel bir AI asistanısın. Görevin, kullanıcılara Türk mevzuatı ve yargı kararları hakkında **kesin, doğru ve kanıtlanabilir** bilgiler sunmaktır.\n\n## ⚖️ TEMEL PRENSİPLER\n\n### 1. **KANIT TABANLI YAKLAŞIM**\n- **ASLA** varsayım yapma veya tahmin etme\n- **ASLA** genel bilgilerle yetinme\n- **HER ZAMAN** mevcut MCP araçlarını kullanarak **gerçek mevzuat metinlerini ve yargı kararlarını** bul ve alıntıla\n- **HER ZANİT** için kaynak göster (mevzuat adı, madde numarası, karar tarihi, mahkeme)\n\n### 2. **DOĞRULUK ZORUNLULUĞU**\n- Emin olmadığın hiçbir bilgiyi verme\n- \"Bilmiyorum\" demekten çekinme\n- Kullanıcıya \"Bu konuda mevzuat/yargı araştırması yapmam gerekiyor\" de\n- MCP araçlarını kullanarak **gerçek zamanlı** arama yap\n\n### 3. **PROFESYONEL DİL**\n- Hukuki terminolojiyi doğru kullan\n- Açık, net ve anlaşılır ol\n- Teknik jargonu gerektiğinde açıkla\n- Türkçe dilbilgisi kurallarına uy\n\n## 🎯 KULLANIM STRATEJİSİ\n\n### 1. **GÖREV PLANLAMA VE DÜŞÜNME**\n```\n1. sequential_thinking ile görevi analiz et\n2. Adım adım düşünme sürecini planla\n3. Hangi yargı kararlarının araştırılacağını belirle\n4. Araştırma stratejisini oluştur\n```\n\n### 2. **YARGI KARARI ARAŞTIRMASI**\n```\n1. İlgili mahkeme aracını kullan (search_bedesten_unified, search_yargitay_detailed, vb.)\n2. Karar listesinden ilgili kararı seç\n3. İlgili `get_document` aracı ile karar metnini al\n4. Kararın tarihini ve mahkemesini not et\n```\n\n### 3. **KAPSAMLI YARGI ARAŞTIRMASI**\n```\n1. search_bedesten_unified ile genel bir arama yap\n2. Gerekirse, ilgili mahkemenin detaylı arama aracını kullan\n3. Anayasa Mahkemesi kararlarını ayrıca kontrol et\n4. Kararları karşılaştır ve güncel uygulamaları belirt\n```\n\n## 📝 YANIT FORMATI\n\n### Görev Planlama Yanıtı:\n```\n## 🧠 Görev Analizi ve Planlama\n\n**Verilen Görev:** [Görev]\n\n### 📋 Düşünme Süreci:\n[sequential_thinking ile adım adım analiz]\n\n### 🎯 Araştırma Stratejisi:\n1. [İlk adım]\n2. [İkinci adım]\n3. [Üçüncü adım]\n...\n\n### ⚖️ Hangi Yargı Kararları Araştırılacak:\n- [Yargıtay kararları]\n- [Danıştay kararları]\n- [Anayasa Mahkemesi kararları]\n- [Diğer mahkeme kararları]\n```\n\n### Standart Yargı Kararı Yanıtı:\n```\n## ⚖️ Yargı Kararı Araştırması\n\n**Aranan Konu:** [Konu]\n\n### 🏛️ Bulunan Karar:\n- **Mahkeme:** [Mahkeme Adı]\n- **Daire:** [Daire Adı]\n- **Karar No:** [Karar Numarası]\n- **Tarih:** [Karar Tarihi]\n\n### 📄 Karar Metni:\n> [Doğrudan karar metninden alıntı]\n\n### 💡 Yorum:\n[Kararın önemi ve etkisi]\n\n---\n*Kaynak: [Mahkeme] - [Karar No] - [Tarih]*\n```\n\n### Kapsamlı Yargı Araştırması:\n```\n## ⚖️ Kapsamlı Yargı Kararları Araştırması\n\n**Aranan Konu:** [Konu]\n\n### 🏛️ Yargıtay Kararları:\n[Yargıtay kararları araştırması sonuçları]\n\n### 🏛️ Danıştay Kararları:\n[Danıştay kararları araştırması sonuçları]\n\n### 🏛️ Anayasa Mahkemesi Kararları:\n[Anayasa Mahkemesi kararları araştırması sonuçları]\n\n### 🏛️ Diğer Mahkeme Kararları:\n[Diğer mahkeme kararları araştırması sonuçları]\n\n### 💡 Değerlendirme:\n[Yargı kararlarının birlikte değerlendirilmesi]\n\n---\n*Kaynaklar: [Tüm kaynakların listesi]*\n```\n\n## ⚠️ YASAKLAR\n\n### ASLA YAPMA:\n- ❌ Varsayım yapma\n- ❌ Genel bilgilerle yetinme\n- ❌ \"Muhtemelen\", \"sanırım\", \"galiba\" gibi ifadeler kullanma\n- ❌ Eski bilgileri güncelmiş gibi sunma\n- ❌ Yabancı hukuk sistemlerinden örnek verme\n- ❌ Kişisel yorum yapma\n- ❌ Mevzuat ile yargı kararını karıştırma\n\n### MUTLAKA YAP:\n- ✅ MCP araçlarını kullan\n- ✅ Gerçek mevzuat metinlerini ve yargı kararlarını alıntıla\n- ✅ Kaynak göster\n- ✅ Güncel bilgi ara\n- ✅ \"Bilmiyorum\" de (emin değilsen)\n- ✅ Mevzuat ve yargı kararlarını ayrı ayrı belirt\n\n## 🎯 ÖRNEK KULLANIM\n\n### Kullanıcı Sorusu: \"İşçi tazminatı konusunda güncel yargı kararları var mı?\"\n\n### Doğru Yanıt:\n```\n## 🧠 Görev Analizi ve Planlama\n\n**Verilen Görev:** İşçi tazminatı konusunda güncel yargı kararları araştırması\n\n### 📋 Düşünme Süreci:\n[sequential_thinking ile adım adım analiz]\n1. İşçi tazminatı konusunu analiz et\n2. Hangi mahkemelerin bu konuda karar verdiğini belirle\n3. Güncel kararları önceliklendir\n4. Araştırma stratejisini oluştur\n\n### 🎯 Araştırma Stratejisi:\n1. search_bedesten_unified ile \"işçi tazminatı\" aramasını Yargıtay ve İstinaf mahkemelerinde yap\n2. search_anayasa_unified ile Anayasa Mahkemesi'nde bireysel başvuruları kontrol et\n3. search_emsal_detailed_decisions ile emsal kararları tara\n\n### ⚖️ Hangi Yargı Kararları Araştırılacak:\n- Yargıtay Hukuk Daireleri kararları\n- İstinaf Mahkemesi kararları\n- Anayasa Mahkemesi bireysel başvuru kararları\n- Emsal kararlar\n\n---\n\n## ⚖️ Kapsamlı Yargı Kararları Araştırması\n\n**Aranan Konu:** İşçi tazminatı ve güncel yargı kararları\n\n### 🏛️ Yargıtay Kararları:\n[MCP search_yargitay_detailed ile \"işçi tazminatı\" araması]\n\n**Yargıtay 9. Hukuk Dairesi - 2023/1234 E. 2023/5678 K. - 15.03.2023:**\n> \"Kıdem tazminatı hesaplamasında işçinin son ücreti dikkate alınmalıdır.\"\n\n### 🏛️ Anayasa Mahkemesi Kararları:\n[MCP search_anayasa_unified ile \"işçi tazminatı\" araması]\n\n**Anayasa Mahkemesi - 2023/12345 - 10.05.2023:**\n> \"Kıdem tazminatı hakkı anayasal bir haktır.\"\n\n### 💡 Değerlendirme:\nYargı kararları incelendiğinde, kıdem tazminatı hesaplamasında son ücretin dikkate alınması gerektiği ve bu hakkın anayasal koruma altında olduğu anlaşılmaktadır.\n\n---\n*Kaynaklar: Yargıtay 9. HD - 2023/1234 E. 2023/5678 K. - 15.03.2023 | Anayasa Mahkemesi - 2023/12345 - 10.05.2023*\n```\n\n## 🚀 BAŞLANGIÇ MESAJI\n\n\"Merhaba! Ben Türk yargı sistemi için geliştirilmiş AI asistanınızım. Size Türk yargı kararları hakkında kesin ve doğru bilgiler sunmak için MCP araçlarını kullanarak gerçek zamanlı araştırma yapacağım.\n\n**Özelliklerim:**\n- 🧠 **Görev Planlama:** Sequential thinking ile adım adım düşünme\n- ⚖️ **Yargı Kararları:** Yargıtay, Danıştay, Anayasa Mahkemesi ve diğer mahkeme kararları\n- 📋 **Stratejik Araştırma:** Sistematik ve kapsamlı yargı kararı araştırması\n\nHangi hukuki konuda yargı kararları araştırması yapmamı istiyorsunuz? Lütfen sorunuzu detaylandırın ki size en doğru yargı kararlarını sunabileyim.\"\n\n---\n\n**ÖNEMLİ:** Bu prompt'u kullanırken her zaman MCP araçlarını aktif olarak kullan ve gerçek yargı kararlarını alıntıla. Asla varsayım yapma!\n\n## KRİTİK: MCP Parametre Formatı (TÜM ARGÜMANLAR STRING)\n- Tüm MCP araç çağrılarında gönderilen parametreler string olmalıdır. Sayısal görünen değerler dahi tırnak içinde gönderilir (örn. \"2024\", \"000123\").\n- Başta/sonda sıfır bulunan sıra numaraları aynen korunmalıdır (örn. \"001234\", \"0005678\").\n- Mahkeme adları ve özel karakterler (İ, Ş, Ğ, Ü, Ö, Ç) eksiksiz ve büyük harfle yazılmalıdır.\n- Keyword girilmesi zorunlu değildir.\n- Örnek (search_emsal_detailed_decisions):\n  - case_year_esas: \"2023\"\n  - case_start_seq_esas: \"001234\"\n  - case_end_seq_esas: \"\"\n  - decision_year_karar: \"2024\"\n  - decision_start_seq_karar: \"0005678\"\n  - decision_end_seq_karar: \"\"\n  - start_date: \"01.09.2024\"\n  - end_date: \"30.09.2024\"\n  - selected_civil_court: \"İZMİR 7. ASLİYE TİCARET MAHKEMESİ\"\n  - keyword: \"\"\n\n## KRİTİK: Tarih Formatı ve Geçerlilik\n- Tüm tarihler string olmalı ve DD.MM.YYYY formatında gönderilmelidir (örn. \"05.01.2023\").\n- Gün ve ay kısmında tek haneli değerler için başa sıfır eklenmelidir (örn. \"7.3.2024\" YANLIŞ, \"07.03.2024\" DOĞRU).\n- ISO (YYYY-MM-DD), eğik çizgi (DD/MM/YYYY) veya noktasız formatlar kullanılmaz.\n- Tarih aralığı belirsizse asla uydurma tarih üretme. Gerekirse kullanıcıdan netleştirme iste veya yalnızca bilinen parametrelerle dene.\n\n## Token Optimizasyonu (Çok Önemli)\n- Kısa ve öz yaz. Planı 3-5 maddede özetle; gereksiz tekrar yapma.\n- Uzun alıntılardan kaçın. Karar metinlerinden en fazla 3-5 cümlelik öz alıntı ver; kalanını özetle.\n- Listelemelerde varsayılan olarak en fazla 3-5 sonuç sun; daha fazlası istenirse sor (\"Daha fazla ister misiniz?\").\n- Aynı bilgiyi iki kez yazma (başlık, özet, kaynak tekrarları gibi).\n- Araç çağrılarında gereksiz alanları göndermeden, yalnızca gereken parametreleri kullan.\n- Arama araçlarında mümkünse daraltıcı filtreleri kullan (ör. doğru mahkeme adı, yıl, sıra numarası, tarih aralığı). Geniş aramalar yerine hedefe yönelik aramalar yap.\n- Sıralama/limit parametreleri varsa (örn. sort_direction: \"desc\", page_number: \"1\") ilk etapta dar sonuç seti ile çalış; sadece gerekli olduğunda genişlet.\n- Yanıtta aynı şablon bloğunu tekrar etme; bölüm başlıklarını kısa tut.\n",
+          "inputModeration": "",
+          "maxIterations": "",
+          "enableDetailedStreaming": true
+        },
+        "outputAnchors": [
+          {
+            "id": "toolAgent_0-output-toolAgent-AgentExecutor|BaseChain|Runnable",
+            "name": "toolAgent",
+            "label": "AgentExecutor",
+            "description": "Agent that uses Function Calling to pick the tools and args to call",
+            "type": "AgentExecutor | BaseChain | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 492,
+      "positionAbsolute": {
+        "x": 1182.0805719733655,
+        "y": 200.67890556476976
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "currentDateTime_0",
+      "position": {
+        "x": 595.967702054995,
+        "y": -314.7914235749922
+      },
+      "type": "customNode",
+      "data": {
+        "id": "currentDateTime_0",
+        "label": "CurrentDateTime",
+        "version": 1,
+        "name": "currentDateTime",
+        "type": "CurrentDateTime",
+        "baseClasses": [
+          "CurrentDateTime",
+          "Tool"
+        ],
+        "category": "Tools",
+        "description": "Get todays day, date and time.",
+        "inputParams": [],
+        "inputAnchors": [],
+        "inputs": {},
+        "outputAnchors": [
+          {
+            "id": "currentDateTime_0-output-currentDateTime-CurrentDateTime|Tool",
+            "name": "currentDateTime",
+            "label": "CurrentDateTime",
+            "description": "Get todays day, date and time.",
+            "type": "CurrentDateTime | Tool"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 149,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 595.967702054995,
+        "y": -314.7914235749922
+      },
+      "dragging": false
+    },
+    {
+      "id": "chatGoogleGenerativeAI_0",
+      "position": {
+        "x": -627.8096031909182,
+        "y": -98.8003338577914
+      },
+      "type": "customNode",
+      "data": {
+        "id": "chatGoogleGenerativeAI_0",
+        "label": "ChatGoogleGenerativeAI",
+        "version": 3.1,
+        "name": "chatGoogleGenerativeAI",
+        "type": "ChatGoogleGenerativeAI",
+        "baseClasses": [
+          "ChatGoogleGenerativeAI",
+          "LangchainChatGoogleGenerativeAI",
+          "BaseChatModel",
+          "BaseLanguageModel",
+          "Runnable"
+        ],
+        "category": "Chat Models",
+        "description": "Wrapper around Google Gemini large language models that use the Chat endpoint",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "credentialNames": [
+              "googleGenerativeAI"
+            ],
+            "optional": false,
+            "description": "Google Generative AI credential.",
+            "id": "chatGoogleGenerativeAI_0-input-credential-credential",
+            "display": true
+          },
+          {
+            "label": "Model Name",
+            "name": "modelName",
+            "type": "asyncOptions",
+            "loadMethod": "listModels",
+            "default": "gemini-1.5-flash-latest",
+            "id": "chatGoogleGenerativeAI_0-input-modelName-asyncOptions",
+            "display": true
+          },
+          {
+            "label": "Custom Model Name",
+            "name": "customModelName",
+            "type": "string",
+            "placeholder": "gemini-1.5-pro-exp-0801",
+            "description": "Custom model name to use. If provided, it will override the model selected",
+            "additionalParams": true,
+            "optional": true,
+            "id": "chatGoogleGenerativeAI_0-input-customModelName-string",
+            "display": true
+          },
+          {
+            "label": "Temperature",
+            "name": "temperature",
+            "type": "number",
+            "step": 0.1,
+            "default": 0.9,
+            "optional": true,
+            "id": "chatGoogleGenerativeAI_0-input-temperature-number",
+            "display": true
+          },
+          {
+            "label": "Streaming",
+            "name": "streaming",
+            "type": "boolean",
+            "default": true,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatGoogleGenerativeAI_0-input-streaming-boolean",
+            "display": true
+          },
+          {
+            "label": "Max Output Tokens",
+            "name": "maxOutputTokens",
+            "type": "number",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatGoogleGenerativeAI_0-input-maxOutputTokens-number",
+            "display": true
+          },
+          {
+            "label": "Top Probability",
+            "name": "topP",
+            "type": "number",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatGoogleGenerativeAI_0-input-topP-number",
+            "display": true
+          },
+          {
+            "label": "Top Next Highest Probability Tokens",
+            "name": "topK",
+            "type": "number",
+            "description": "Decode using top-k sampling: consider the set of top_k most probable tokens. Must be positive",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatGoogleGenerativeAI_0-input-topK-number",
+            "display": true
+          },
+          {
+            "label": "Safety Settings",
+            "name": "safetySettings",
+            "type": "array",
+            "description": "Safety settings for the model. Refer to the <a href=\"https://ai.google.dev/gemini-api/docs/safety-settings\">official guide</a> on how to use Safety Settings",
+            "array": [
+              {
+                "label": "Harm Category",
+                "name": "harmCategory",
+                "type": "options",
+                "options": [
+                  {
+                    "label": "Dangerous",
+                    "name": "HARM_CATEGORY_DANGEROUS_CONTENT",
+                    "description": "Promotes, facilitates, or encourages harmful acts."
+                  },
+                  {
+                    "label": "Harassment",
+                    "name": "HARM_CATEGORY_HARASSMENT",
+                    "description": "Negative or harmful comments targeting identity and/or protected attributes."
+                  },
+                  {
+                    "label": "Hate Speech",
+                    "name": "HARM_CATEGORY_HATE_SPEECH",
+                    "description": "Content that is rude, disrespectful, or profane."
+                  },
+                  {
+                    "label": "Sexually Explicit",
+                    "name": "HARM_CATEGORY_SEXUALLY_EXPLICIT",
+                    "description": "Contains references to sexual acts or other lewd content."
+                  },
+                  {
+                    "label": "Civic Integrity",
+                    "name": "HARM_CATEGORY_CIVIC_INTEGRITY",
+                    "description": "Election-related queries."
+                  }
+                ]
+              },
+              {
+                "label": "Harm Block Threshold",
+                "name": "harmBlockThreshold",
+                "type": "options",
+                "options": [
+                  {
+                    "label": "None",
+                    "name": "BLOCK_NONE",
+                    "description": "Always show regardless of probability of unsafe content"
+                  },
+                  {
+                    "label": "Only High",
+                    "name": "BLOCK_ONLY_HIGH",
+                    "description": "Block when high probability of unsafe content"
+                  },
+                  {
+                    "label": "Medium and Above",
+                    "name": "BLOCK_MEDIUM_AND_ABOVE",
+                    "description": "Block when medium or high probability of unsafe content"
+                  },
+                  {
+                    "label": "Low and Above",
+                    "name": "BLOCK_LOW_AND_ABOVE",
+                    "description": "Block when low, medium or high probability of unsafe content"
+                  },
+                  {
+                    "label": "Threshold Unspecified (Default Threshold)",
+                    "name": "HARM_BLOCK_THRESHOLD_UNSPECIFIED",
+                    "description": "Threshold is unspecified, block using default threshold"
+                  }
+                ]
+              }
+            ],
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatGoogleGenerativeAI_0-input-safetySettings-array",
+            "display": true
+          },
+          {
+            "label": "Base URL",
+            "name": "baseUrl",
+            "type": "string",
+            "description": "Base URL for the API. Leave empty to use the default.",
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatGoogleGenerativeAI_0-input-baseUrl-string",
+            "display": true
+          },
+          {
+            "label": "Allow Image Uploads",
+            "name": "allowImageUploads",
+            "type": "boolean",
+            "description": "Allow image input. Refer to the <a href=\"https://docs.flowiseai.com/using-flowise/uploads#image\" target=\"_blank\">docs</a> for more details.",
+            "default": false,
+            "optional": true,
+            "id": "chatGoogleGenerativeAI_0-input-allowImageUploads-boolean",
+            "display": true
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Cache",
+            "name": "cache",
+            "type": "BaseCache",
+            "optional": true,
+            "id": "chatGoogleGenerativeAI_0-input-cache-BaseCache",
+            "display": true
+          }
+        ],
+        "inputs": {
+          "cache": "",
+          "modelName": "gemini-2.5-pro",
+          "customModelName": "",
+          "temperature": 0.9,
+          "streaming": true,
+          "maxOutputTokens": "",
+          "topP": "",
+          "topK": "",
+          "safetySettings": "",
+          "baseUrl": "",
+          "allowImageUploads": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "chatGoogleGenerativeAI_0-output-chatGoogleGenerativeAI-ChatGoogleGenerativeAI|LangchainChatGoogleGenerativeAI|BaseChatModel|BaseLanguageModel|Runnable",
+            "name": "chatGoogleGenerativeAI",
+            "label": "ChatGoogleGenerativeAI",
+            "description": "Wrapper around Google Gemini large language models that use the Chat endpoint",
+            "type": "ChatGoogleGenerativeAI | LangchainChatGoogleGenerativeAI | BaseChatModel | BaseLanguageModel | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 676,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -627.8096031909182,
+        "y": -98.8003338577914
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "customMCP_0",
+      "sourceHandle": "customMCP_0-output-customMCP-Tool",
+      "target": "toolAgent_0",
+      "targetHandle": "toolAgent_0-input-tools-Tool",
+      "type": "buttonedge",
+      "id": "customMCP_0-customMCP_0-output-customMCP-Tool-toolAgent_0-toolAgent_0-input-tools-Tool"
+    },
+    {
+      "source": "bufferMemory_1",
+      "sourceHandle": "bufferMemory_1-output-bufferMemory-BufferMemory|BaseChatMemory|BaseMemory",
+      "target": "toolAgent_0",
+      "targetHandle": "toolAgent_0-input-memory-BaseChatMemory",
+      "type": "buttonedge",
+      "id": "bufferMemory_1-bufferMemory_1-output-bufferMemory-BufferMemory|BaseChatMemory|BaseMemory-toolAgent_0-toolAgent_0-input-memory-BaseChatMemory"
+    },
+    {
+      "source": "sequentialThinkingMCP_0",
+      "sourceHandle": "sequentialThinkingMCP_0-output-sequentialThinkingMCP-Tool",
+      "target": "toolAgent_0",
+      "targetHandle": "toolAgent_0-input-tools-Tool",
+      "type": "buttonedge",
+      "id": "sequentialThinkingMCP_0-sequentialThinkingMCP_0-output-sequentialThinkingMCP-Tool-toolAgent_0-toolAgent_0-input-tools-Tool"
+    },
+    {
+      "source": "currentDateTime_0",
+      "sourceHandle": "currentDateTime_0-output-currentDateTime-CurrentDateTime|Tool",
+      "target": "toolAgent_0",
+      "targetHandle": "toolAgent_0-input-tools-Tool",
+      "type": "buttonedge",
+      "id": "currentDateTime_0-currentDateTime_0-output-currentDateTime-CurrentDateTime|Tool-toolAgent_0-toolAgent_0-input-tools-Tool"
+    },
+    {
+      "source": "chatGoogleGenerativeAI_0",
+      "sourceHandle": "chatGoogleGenerativeAI_0-output-chatGoogleGenerativeAI-ChatGoogleGenerativeAI|LangchainChatGoogleGenerativeAI|BaseChatModel|BaseLanguageModel|Runnable",
+      "target": "toolAgent_0",
+      "targetHandle": "toolAgent_0-input-model-BaseChatModel",
+      "type": "buttonedge",
+      "id": "chatGoogleGenerativeAI_0-chatGoogleGenerativeAI_0-output-chatGoogleGenerativeAI-ChatGoogleGenerativeAI|LangchainChatGoogleGenerativeAI|BaseChatModel|BaseLanguageModel|Runnable-toolAgent_0-toolAgent_0-input-model-BaseChatModel"
+    }
+  ]
+}

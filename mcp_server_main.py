@@ -608,21 +608,21 @@ async def get_danistay_document_markdown(id: str) -> DanistayDocumentMarkdown:
     }
 )
 async def search_emsal_detailed_decisions(
-    keyword: str = Field("", description="Keyword to search."),
-    selected_bam_civil_court: str = Field("", description="Selected BAM Civil Court."),
-    selected_civil_court: str = Field("", description="Selected Civil Court."),
-    selected_regional_civil_chambers: List[str] = Field(default_factory=list, description="Selected Regional Civil Chambers."),
-    case_year_esas: str = Field("", description="Case year for 'Esas No'."),
-    case_start_seq_esas: str = Field("", description="Starting sequence for 'Esas No'."),
-    case_end_seq_esas: str = Field("", description="Ending sequence for 'Esas No'."),
-    decision_year_karar: str = Field("", description="Decision year for 'Karar No'."),
-    decision_start_seq_karar: str = Field("", description="Starting sequence for 'Karar No'."),
-    decision_end_seq_karar: str = Field("", description="Ending sequence for 'Karar No'."),
-    start_date: str = Field("", description="Start date for decision (DD.MM.YYYY)."),
-    end_date: str = Field("", description="End date for decision (DD.MM.YYYY)."),
-    sort_criteria: str = Field("1", description="Sorting criteria (e.g., 1: Esas No)."),
-    sort_direction: str = Field("desc", description="Sorting direction ('asc' or 'desc')."),
-    page_number: int = Field(1, ge=1, description="Page number (accepts int)."),
+    keyword: str = Field("", description="Keyword to search. Format: string (metin)"),
+    selected_bam_civil_court: str = Field("", description="Selected BAM Civil Court. Format: string (metin)"),
+    selected_civil_court: str = Field("", description="Selected Civil Court. Format: string (metin)"),
+    selected_regional_civil_chambers: List[str] = Field(default_factory=list, description="Selected Regional Civil Chambers. Format: list of strings (metin listesi)"),
+    case_year_esas: str = Field("", description="Case year for 'Esas No'. Format: string (metin)"),
+    case_start_seq_esas: str = Field("", description="Starting sequence for 'Esas No'. Format: string (metin)"),
+    case_end_seq_esas: str = Field("", description="Ending sequence for 'Esas No'. Format: string (metin)"),
+    decision_year_karar: str = Field("", description="Decision year for 'Karar No'. Format: string (metin)"),
+    decision_start_seq_karar: str = Field("", description="Starting sequence for 'Karar No'. Format: string (metin)"),
+    decision_end_seq_karar: str = Field("", description="Ending sequence for 'Karar No'. Format: string (metin)"),
+    start_date: str = Field("", description="Start date for decision. Format: string (DD.MM.YYYY)"),
+    end_date: str = Field("", description="End date for decision. Format: string (DD.MM.YYYY)"),
+    sort_criteria: str = Field("1", description="Sorting criteria (e.g., 1: Esas No). Format: string (metin)"),
+    sort_direction: str = Field("desc", description="Sorting direction ('asc' or 'desc'). Format: string (metin)"),
+    page_number: int = Field(1, ge=1, description="Page number. Format: integer (tam sayı)"),
     # page_size: int = Field(10, ge=1, le=10, description="Results per page.")
 ) -> CompactEmsalSearchResult:
     """Search Emsal precedent decisions with detailed criteria."""
@@ -671,7 +671,7 @@ async def search_emsal_detailed_decisions(
         "idempotentHint": True
     }
 )
-async def get_emsal_document_markdown(id: str) -> EmsalDocumentMarkdown:
+async def get_emsal_document_markdown(id: str = Field(..., description="Document ID for Emsal decision. Format: string (metin)")) -> EmsalDocumentMarkdown:
     """Get document as Markdown."""
     logger.info(f"Tool 'get_emsal_document_markdown' called for ID: {id}")
     if not id or not id.strip(): raise ValueError("Document ID required for Emsal.")
@@ -691,24 +691,24 @@ async def get_emsal_document_markdown(id: str) -> EmsalDocumentMarkdown:
     }
 )
 async def search_uyusmazlik_decisions(
-    icerik: str = Field("", description="Keyword or content for main text search."),
-    bolum: Literal["ALL", "Ceza Bölümü", "Genel Kurul Kararları", "Hukuk Bölümü"] = Field("ALL", description="Select the department (Bölüm). Use 'ALL' for all departments."),
-    uyusmazlik_turu: Literal["ALL", "Görev Uyuşmazlığı", "Hüküm Uyuşmazlığı"] = Field("ALL", description="Select the type of dispute. Use 'ALL' for all types."),
-    karar_sonuclari: List[Literal["Hüküm Uyuşmazlığı Olmadığına Dair", "Hüküm Uyuşmazlığı Olduğuna Dair"]] = Field(default_factory=list, description="List of desired 'Karar Sonucu' types."),
-    esas_yil: str = Field("", description="Case year ('Esas Yılı')."),
-    esas_sayisi: str = Field("", description="Case number ('Esas Sayısı')."),
-    karar_yil: str = Field("", description="Decision year ('Karar Yılı')."),
-    karar_sayisi: str = Field("", description="Decision number ('Karar Sayısı')."),
-    kanun_no: str = Field("", description="Relevant Law Number."),
-    karar_date_begin: str = Field("", description="Decision start date (DD.MM.YYYY)."),
-    karar_date_end: str = Field("", description="Decision end date (DD.MM.YYYY)."),
-    resmi_gazete_sayi: str = Field("", description="Official Gazette number."),
-    resmi_gazete_date: str = Field("", description="Official Gazette date (DD.MM.YYYY)."),
-    tumce: str = Field("", description="Exact phrase search."),
-    wild_card: str = Field("", description="Search for phrase and its inflections."),
-    hepsi: str = Field("", description="Search for texts containing all specified words."),
-    herhangi_birisi: str = Field("", description="Search for texts containing any of the specified words."),
-    not_hepsi: str = Field("", description="Exclude texts containing these specified words.")
+    icerik: str = Field("", description="Keyword or content for main text search. Format: string (metin)"),
+    bolum: Literal["ALL", "Ceza Bölümü", "Genel Kurul Kararları", "Hukuk Bölümü"] = Field("ALL", description="Select the department (Bölüm). Use 'ALL' for all departments. Format: literal string (sabit metin değeri)"),
+    uyusmazlik_turu: Literal["ALL", "Görev Uyuşmazlığı", "Hüküm Uyuşmazlığı"] = Field("ALL", description="Select the type of dispute. Use 'ALL' for all types. Format: literal string (sabit metin değeri)"),
+    karar_sonuclari: List[Literal["Hüküm Uyuşmazlığı Olmadığına Dair", "Hüküm Uyuşmazlığı Olduğuna Dair"]] = Field(default_factory=list, description="List of desired 'Karar Sonucu' types. Format: list of literal strings (sabit metin değerleri listesi)"),
+    esas_yil: str = Field("", description="Case year ('Esas Yılı'). Format: string (metin)"),
+    esas_sayisi: str = Field("", description="Case number ('Esas Sayısı'). Format: string (metin)"),
+    karar_yil: str = Field("", description="Decision year ('Karar Yılı'). Format: string (metin)"),
+    karar_sayisi: str = Field("", description="Decision number ('Karar Sayısı'). Format: string (metin)"),
+    kanun_no: str = Field("", description="Relevant Law Number. Format: string (metin)"),
+    karar_date_begin: str = Field("", description="Decision start date. Format: string (DD.MM.YYYY)"),
+    karar_date_end: str = Field("", description="Decision end date. Format: string (DD.MM.YYYY)"),
+    resmi_gazete_sayi: str = Field("", description="Official Gazette number. Format: string (metin)"),
+    resmi_gazete_date: str = Field("", description="Official Gazette date. Format: string (DD.MM.YYYY)"),
+    tumce: str = Field("", description="Exact phrase search. Format: string (metin)"),
+    wild_card: str = Field("", description="Search for phrase and its inflections. Format: string (metin)"),
+    hepsi: str = Field("", description="Search for texts containing all specified words. Format: string (metin)"),
+    herhangi_birisi: str = Field("", description="Search for texts containing any of the specified words. Format: string (metin)"),
+    not_hepsi: str = Field("", description="Exclude texts containing these specified words. Format: string (metin)")
 ) -> UyusmazlikSearchResponse:
     """Search Court of Jurisdictional Disputes decisions."""
     
@@ -761,7 +761,7 @@ async def search_uyusmazlik_decisions(
     }
 )
 async def get_uyusmazlik_document_markdown_from_url(
-    document_url: str = Field(..., description="Full URL to the Uyuşmazlık Mahkemesi decision document from search results")
+    document_url: str = Field(..., description="Full URL to the Uyuşmazlık Mahkemesi decision document from search results. Format: string (metin)")
 ) -> UyusmazlikDocumentMarkdown:
     """Get Uyuşmazlık Mahkemesi decision as Markdown."""
     logger.info(f"Tool 'get_uyusmazlik_document_markdown_from_url' called for URL: {str(document_url)}")
@@ -819,23 +819,23 @@ async def get_uyusmazlik_document_markdown_from_url(
     }
 )
 async def search_anayasa_unified(
-    decision_type: Literal["norm_denetimi", "bireysel_basvuru"] = Field(..., description="Decision type: norm_denetimi (norm control) or bireysel_basvuru (individual applications)"),
-    keywords: List[str] = Field(default_factory=list, description="Keywords to search for (common parameter)"),
-    page_to_fetch: int = Field(1, ge=1, le=100, description="Page number to fetch (1-100)"),
+    decision_type: Literal["norm_denetimi", "bireysel_basvuru"] = Field(..., description="Decision type: norm_denetimi (norm control) or bireysel_basvuru (individual applications). Format: literal string (sabit metin değeri)"),
+    keywords: List[str] = Field(default_factory=list, description="Keywords to search for (common parameter). Format: list of strings (metin listesi)"),
+    page_to_fetch: int = Field(1, ge=1, le=100, description="Page number to fetch (1-100). Format: integer (tam sayı)"),
     # results_per_page: int = Field(10, ge=1, le=100, description="Results per page (1-100)"),
     
     # Norm Denetimi specific parameters (ignored for bireysel_basvuru)
-    keywords_all: List[str] = Field(default_factory=list, description="All keywords must be present (norm_denetimi only)"),
-    keywords_any: List[str] = Field(default_factory=list, description="Any of these keywords (norm_denetimi only)"),
-    decision_type_norm: Literal["ALL", "1", "2", "3"] = Field("ALL", description="Decision type for norm denetimi"),
-    application_date_start: str = Field("", description="Application start date (norm_denetimi only)"),
-    application_date_end: str = Field("", description="Application end date (norm_denetimi only)"),
+    keywords_all: List[str] = Field(default_factory=list, description="All keywords must be present (norm_denetimi only). Format: list of strings (metin listesi)"),
+    keywords_any: List[str] = Field(default_factory=list, description="Any of these keywords (norm_denetimi only). Format: list of strings (metin listesi)"),
+    decision_type_norm: Literal["ALL", "1", "2", "3"] = Field("ALL", description="Decision type for norm denetimi. Format: literal string (sabit metin değeri)"),
+    application_date_start: str = Field("", description="Application start date (norm_denetimi only). Format: string (metin)"),
+    application_date_end: str = Field("", description="Application end date (norm_denetimi only). Format: string (metin)"),
     
     # Bireysel Başvuru specific parameters (ignored for norm_denetimi)
-    decision_start_date: str = Field("", description="Decision start date (bireysel_basvuru only)"),
-    decision_end_date: str = Field("", description="Decision end date (bireysel_basvuru only)"),
-    norm_type: Literal["ALL", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "0"] = Field("ALL", description="Norm type (bireysel_basvuru only)"),
-    subject_category: str = Field("", description="Subject category (bireysel_basvuru only)")
+    decision_start_date: str = Field("", description="Decision start date (bireysel_basvuru only). Format: string (metin)"),
+    decision_end_date: str = Field("", description="Decision end date (bireysel_basvuru only). Format: string (metin)"),
+    norm_type: Literal["ALL", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "0"] = Field("ALL", description="Norm type (bireysel_basvuru only). Format: literal string (sabit metin değeri)"),
+    subject_category: str = Field("", description="Subject category (bireysel_basvuru only). Format: string (metin)")
 ) -> str:
     logger.info(f"Tool 'search_anayasa_unified' called for decision_type: {decision_type}")
     
@@ -874,8 +874,8 @@ async def search_anayasa_unified(
     }
 )
 async def get_anayasa_document_unified(
-    document_url: str = Field(..., description="Document URL from search results"),
-    page_number: int = Field(1, ge=1, description="Page number for paginated content (1-indexed)")
+    document_url: str = Field(..., description="Document URL from search results. Format: string (metin)"),
+    page_number: int = Field(1, ge=1, description="Page number for paginated content (1-indexed). Format: integer (tam sayı)")
 ) -> str:
     logger.info(f"Tool 'get_anayasa_document_unified' called for URL: {document_url}, Page: {page_number}")
     
@@ -897,18 +897,18 @@ async def get_anayasa_document_unified(
     }
 )
 async def search_kik_decisions(
-    karar_tipi: Literal["rbUyusmazlik", "rbDuzenleyici", "rbMahkeme"] = Field("rbUyusmazlik", description="Type of KIK Decision."),
-    karar_no: str = Field("", description="Decision Number (e.g., '2024/UH.II-1766')."),
-    karar_tarihi_baslangic: str = Field("", description="Decision Date Start (DD.MM.YYYY)."),
-    karar_tarihi_bitis: str = Field("", description="Decision Date End (DD.MM.YYYY)."),
-    basvuru_sahibi: str = Field("", description="Applicant."),
-    ihaleyi_yapan_idare: str = Field("", description="Procuring Entity."),
-    basvuru_konusu_ihale: str = Field("", description="Tender subject of the application."),
-    karar_metni: str = Field("", description="Decision text search. Supports: +word, -word, \"exact phrase\", OR/AND"),
-    yil: str = Field("", description="Year of the decision."),
-    resmi_gazete_tarihi: str = Field("", description="Official Gazette Date (DD.MM.YYYY)."),
-    resmi_gazete_sayisi: str = Field("", description="Official Gazette Number."),
-    page: int = Field(1, ge=1, description="Results page number.")
+    karar_tipi: Literal["rbUyusmazlik", "rbDuzenleyici", "rbMahkeme"] = Field("rbUyusmazlik", description="Type of KIK Decision. Format: literal string (sabit metin değeri)"),
+    karar_no: str = Field("", description="Decision Number (e.g., '2024/UH.II-1766'). Format: string (metin)"),
+    karar_tarihi_baslangic: str = Field("", description="Decision Date Start (DD.MM.YYYY). Format: string (metin)"),
+    karar_tarihi_bitis: str = Field("", description="Decision Date End (DD.MM.YYYY). Format: string (metin)"),
+    basvuru_sahibi: str = Field("", description="Applicant. Format: string (metin)"),
+    ihaleyi_yapan_idare: str = Field("", description="Procuring Entity. Format: string (metin)"),
+    basvuru_konusu_ihale: str = Field("", description="Tender subject of the application. Format: string (metin)"),
+    karar_metni: str = Field("", description="Decision text search. Supports: +word, -word, \"exact phrase\", OR/AND. Format: string (metin)"),
+    yil: str = Field("", description="Year of the decision. Format: string (metin)"),
+    resmi_gazete_tarihi: str = Field("", description="Official Gazette Date (DD.MM.YYYY). Format: string (metin)"),
+    resmi_gazete_sayisi: str = Field("", description="Official Gazette Number. Format: string (metin)"),
+    page: int = Field(1, ge=1, description="Results page number. Format: integer (tam sayı)")
 ) -> KikSearchResult:
     """Search Public Procurement Authority (KIK) decisions."""
     
@@ -950,8 +950,8 @@ async def search_kik_decisions(
     }
 )
 async def get_kik_document_markdown(
-    karar_id: str = Field(..., description="The Base64 encoded KIK decision identifier."),
-    page_number: int = Field(1, ge=1, description="Page number for paginated Markdown content (1-indexed). Default is 1.")
+    karar_id: str = Field(..., description="The Base64 encoded KIK decision identifier. Format: string (metin)"),
+    page_number: int = Field(1, ge=1, description="Page number for paginated Markdown content (1-indexed). Default is 1. Format: integer (tam sayı)")
 ) -> KikDocumentMarkdown:
     """Get KIK decision as paginated Markdown."""
     logger.info(f"Tool 'get_kik_document_markdown' called for KIK karar_id: {karar_id}, Markdown Page: {page_number}")
@@ -991,11 +991,11 @@ async def get_kik_document_markdown(
     }
 )
 async def search_rekabet_kurumu_decisions(
-    sayfaAdi: str = Field("", description="Search in decision title (Başlık)."),
-    YayinlanmaTarihi: str = Field("", description="Publication date (Yayım Tarihi), e.g., DD.MM.YYYY."),
+    sayfaAdi: str = Field("", description="Search in decision title (Başlık). Format: string (metin)"),
+    YayinlanmaTarihi: str = Field("", description="Publication date (Yayım Tarihi), e.g., DD.MM.YYYY. Format: string (metin) - DD.MM.YYYY"),
     PdfText: str = Field(
         "",
-        description='Search in decision text. Use "\\"kesin cümle\\"" for precise matching.'
+        description='Search in decision text. Use "\"kesin cümle\"" for precise matching. Format: string (metin)'
     ),
     KararTuru: Literal[ 
         "ALL", 
@@ -1004,10 +1004,10 @@ async def search_rekabet_kurumu_decisions(
         "Menfi Tespit ve Muafiyet",
         "Özelleştirme",
         "Rekabet İhlali"
-    ] = Field("ALL", description="Parameter description"),
-    KararSayisi: str = Field("", description="Decision number (Karar Sayısı)."),
-    KararTarihi: str = Field("", description="Decision date (Karar Tarihi), e.g., DD.MM.YYYY."),
-    page: int = Field(1, ge=1, description="Page number to fetch for the results list.")
+    ] = Field("ALL", description="Decision type selection. Format: literal string (sabit metin değeri)"),
+    KararSayisi: str = Field("", description="Decision number (Karar Sayısı). Format: string (metin)"),
+    KararTarihi: str = Field("", description="Decision date (Karar Tarihi), e.g., DD.MM.YYYY. Format: string (metin) - DD.MM.YYYY"),
+    page: int = Field(1, ge=1, description="Page number to fetch for the results list. Format: integer (tam sayı)")
 ) -> RekabetSearchResult:
     """Search Competition Authority decisions."""
     
@@ -1046,8 +1046,8 @@ async def search_rekabet_kurumu_decisions(
     }
 )
 async def get_rekabet_kurumu_document(
-    karar_id: str = Field(..., description="GUID (kararId) of the Rekabet Kurumu decision. This ID is obtained from search results."),
-    page_number: int = Field(1, ge=1, description="Requested page number for the Markdown content converted from PDF (1-indexed, accepts int). Default is 1.")
+    karar_id: str = Field(..., description="GUID (kararId) of the Rekabet Kurumu decision. This ID is obtained from search results. Format: string (metin) - GUID"),
+    page_number: int = Field(1, ge=1, description="Requested page number for the Markdown content converted from PDF (1-indexed, accepts int). Default is 1. Format: integer (tam sayı)")
 ) -> RekabetDocument:
     """Get Competition Authority decision as paginated Markdown."""
     logger.info(f"Tool 'get_rekabet_kurumu_document' called. Karar ID: {karar_id}, Markdown Page: {page_number}")
@@ -1081,20 +1081,19 @@ async def search_bedesten_unified(
 • Boolean OR: "mülkiyet OR tapu" (either term acceptable)
 • Boolean NOT: "mülkiyet NOT satış" (contains mülkiyet but not satış)
 NOTE: Wildcards (*,?), regex patterns (/regex/), fuzzy search (~), and proximity search are NOT supported.
-For best results, use exact phrases with quotes for legal terms."""),
+For best results, use exact phrases with quotes for legal terms. Format: string (metin)."""),
     court_types: List[BedestenCourtTypeEnum] = Field(
         default=["YARGITAYKARARI", "DANISTAYKARAR"], 
-        description="Court types: YARGITAYKARARI, DANISTAYKARAR, YERELHUKUK, ISTINAFHUKUK, KYB"
+        description="Court types selection. Format: list of enum values (enum değerleri listesi). Options: YARGITAYKARARI, DANISTAYKARAR, YERELHUKUK, ISTINAFHUKUK, KYB"
     ),
     # pageSize: int = Field(10, ge=1, le=10, description="Results per page (1-10)"),
-    pageNumber: int = Field(1, ge=1, description="Page number"),
-    birimAdi: BirimAdiEnum = Field("ALL", description="""
-        Chamber filter (optional). Abbreviated values with Turkish names:
+    pageNumber: int = Field(1, ge=1, description="Page number for pagination. Format: integer (tam sayı)"),
+    birimAdi: BirimAdiEnum = Field("ALL", description="""Chamber filter (optional). Format: enum value (enum değeri). Abbreviated values with Turkish names:
         • Yargıtay: H1-H23 (1-23. Hukuk Dairesi), C1-C23 (1-23. Ceza Dairesi), HGK (Hukuk Genel Kurulu), CGK (Ceza Genel Kurulu), BGK (Büyük Genel Kurulu), HBK (Hukuk Daireleri Başkanlar Kurulu), CBK (Ceza Daireleri Başkanlar Kurulu)
         • Danıştay: D1-D17 (1-17. Daire), DBGK (Büyük Gen.Kur.), IDDK (İdare Dava Daireleri Kurulu), VDDK (Vergi Dava Daireleri Kurulu), IBK (İçtihatları Birleştirme Kurulu), IIK (İdari İşler Kurulu), DBK (Başkanlar Kurulu), AYIM (Askeri Yüksek İdare Mahkemesi), AYIM1-3 (Askeri Yüksek İdare Mahkemesi 1-3. Daire)
         """),
-    kararTarihiStart: str = Field("", description="Start date (ISO 8601 format)"),
-    kararTarihiEnd: str = Field("", description="End date (ISO 8601 format)")
+    kararTarihiStart: str = Field("", description="Start date for decision filtering. Format: string (metin) in ISO 8601 format (YYYY-MM-DD)"),
+    kararTarihiEnd: str = Field("", description="End date for decision filtering. Format: string (metin) in ISO 8601 format (YYYY-MM-DD)")
 ) -> dict:
     """Search Turkish legal databases via unified Bedesten API."""
     
@@ -1168,7 +1167,7 @@ For best results, use exact phrases with quotes for legal terms."""),
     }
 )
 async def get_bedesten_document_markdown(
-    documentId: str = Field(..., description="Document ID from Bedesten search results")
+    documentId: str = Field(..., description="Document ID from Bedesten search results. Format: string (metin)")
 ) -> BedestenDocumentMarkdown:
     """Get legal decision document as Markdown from Bedesten API."""
     logger.info(f"Tool 'get_bedesten_document_markdown' called for ID: {documentId}")
