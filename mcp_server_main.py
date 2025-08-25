@@ -1310,35 +1310,35 @@ async def get_bedesten_document_markdown(
     }
 )
 async def search_sayistay_unified(
-    decision_type: Literal["genel_kurul", "temyiz_kurulu", "daire"] = Field(..., description="Decision type selection. Format: literal string (sabit metin değeri). Options: genel_kurul, temyiz_kurulu, or daire"),
+    decision_type: Literal["genel_kurul", "temyiz_kurulu", "daire"] = Field(..., description="Decision type: genel_kurul, temyiz_kurulu, or daire"),
     
     # Common pagination parameters
-    start: int = Field(0, ge=0, description="Starting record for pagination (0-based). Format: integer (tam sayı)"),
-    length: int = Field(10, ge=1, le=100, description="Number of records per page (1-100). Format: integer (tam sayı)"),
+    start: int = Field(0, ge=0, description="Starting record for pagination (0-based)"),
+    length: int = Field(10, ge=1, le=100, description="Number of records per page (1-100)"),
     
     # Common search parameters
-    karar_tarih_baslangic: str = Field("", description="Start date. Format: string (metin) in DD.MM.YYYY format"),
-    karar_tarih_bitis: str = Field("", description="End date. Format: string (metin) in DD.MM.YYYY format"),
-    kamu_idaresi_turu: Literal["ALL", "Genel Bütçe Kapsamındaki İdareler", "Yüksek Öğretim Kurumları", "Diğer Özel Bütçeli İdareler", "Düzenleyici ve Denetleyici Kurumlar", "Sosyal Güvenlik Kurumları", "Özel İdareler", "Belediyeler ve Bağlı İdareler", "Diğer"] = Field("ALL", description="Public administration type filter. Format: literal string (sabit metin değeri)"),
-    ilam_no: str = Field("", description="Audit report number (İlam No, max 50 chars). Format: string (metin)"),
-    web_karar_konusu: Literal["ALL", "Harcırah Mevzuatı", "İhale Mevzuatı", "İş Mevzuatı", "Personel Mevzuatı", "Sorumluluk ve Yargılama Usulleri", "Vergi Resmi Harç ve Diğer Gelirler", "Çeşitli Konular"] = Field("ALL", description="Decision subject category filter. Format: literal string (sabit metin değeri)"),
+    karar_tarih_baslangic: str = Field("", description="Start date (DD.MM.YYYY format)"),
+    karar_tarih_bitis: str = Field("", description="End date (DD.MM.YYYY format)"),
+    kamu_idaresi_turu: Literal["ALL", "Genel Bütçe Kapsamındaki İdareler", "Yüksek Öğretim Kurumları", "Diğer Özel Bütçeli İdareler", "Düzenleyici ve Denetleyici Kurumlar", "Sosyal Güvenlik Kurumları", "Özel İdareler", "Belediyeler ve Bağlı İdareler", "Diğer"] = Field("ALL", description="Public administration type filter"),
+    ilam_no: str = Field("", description="Audit report number (İlam No, max 50 chars)"),
+    web_karar_konusu: Literal["ALL", "Harcırah Mevzuatı", "İhale Mevzuatı", "İş Mevzuatı", "Personel Mevzuatı", "Sorumluluk ve Yargılama Usulleri", "Vergi Resmi Harç ve Diğer Gelirler", "Çeşitli Konular"] = Field("ALL", description="Decision subject category filter"),
     
     # Genel Kurul specific parameters (ignored for other types)
-    karar_no: str = Field("", description="Decision number (genel_kurul only). Format: string (metin)"),
-    karar_ek: str = Field("", description="Decision appendix number (genel_kurul only). Format: string (metin)"),
-    karar_tamami: str = Field("", description="Full text search (genel_kurul only). Format: string (metin)"),
+    karar_no: str = Field("", description="Decision number (genel_kurul only)"),
+    karar_ek: str = Field("", description="Decision appendix number (genel_kurul only)"),
+    karar_tamami: str = Field("", description="Full text search (genel_kurul only)"),
     
     # Temyiz Kurulu specific parameters (ignored for other types)
-    ilam_dairesi: Literal["ALL", "1", "2", "3", "4", "5", "6", "7", "8"] = Field("ALL", description="Audit chamber selection (temyiz_kurulu only). Format: literal string (sabit metin değeri)"),
-    yili: str = Field("", description="Year (YYYY format, temyiz_kurulu only). Format: string (metin)"),
-    dosya_no: str = Field("", description="File number (temyiz_kurulu only). Format: string (metin)"),
-    temyiz_tutanak_no: str = Field("", description="Appeals board meeting minutes number (temyiz_kurulu only). Format: string (metin)"),
-    temyiz_karar: str = Field("", description="Appeals decision text search (temyiz_kurulu only). Format: string (metin)"),
+    ilam_dairesi: Literal["ALL", "1", "2", "3", "4", "5", "6", "7", "8"] = Field("ALL", description="Audit chamber selection (temyiz_kurulu only)"),
+    yili: str = Field("", description="Year (YYYY format, temyiz_kurulu only)"),
+    dosya_no: str = Field("", description="File number (temyiz_kurulu only)"),
+    temyiz_tutanak_no: str = Field("", description="Appeals board meeting minutes number (temyiz_kurulu only)"),
+    temyiz_karar: str = Field("", description="Appeals decision text search (temyiz_kurulu only)"),
     
     # Daire specific parameters (ignored for other types)
-    yargilama_dairesi: Literal["ALL", "1", "2", "3", "4", "5", "6", "7", "8"] = Field("ALL", description="Chamber selection (daire only). Format: literal string (sabit metin değeri)"),
-    hesap_yili: str = Field("", description="Account year (daire only). Format: string (metin)"),
-    web_karar_metni: str = Field("", description="Decision text search (daire only). Format: string (metin)")
+    yargilama_dairesi: Literal["ALL", "1", "2", "3", "4", "5", "6", "7", "8"] = Field("ALL", description="Chamber selection (daire only)"),
+    hesap_yili: str = Field("", description="Account year (daire only)"),
+    web_karar_metni: str = Field("", description="Decision text search (daire only)")
 ) -> SayistayUnifiedSearchResult:
     """Search Sayıştay decisions across all three decision types with unified interface."""
     logger.info(f"Tool 'search_sayistay_unified' called with decision_type={decision_type}")
@@ -1379,8 +1379,8 @@ async def search_sayistay_unified(
     }
 )
 async def get_sayistay_document_unified(
-    decision_id: str = Field(..., description="Decision ID from search_sayistay_unified results. Format: string (metin)"),
-    decision_type: Literal["genel_kurul", "temyiz_kurulu", "daire"] = Field(..., description="Decision type selection. Format: literal string (sabit metin değeri). Options: genel_kurul, temyiz_kurulu, or daire")
+    decision_id: str = Field(..., description="Decision ID from search_sayistay_unified results"),
+    decision_type: Literal["genel_kurul", "temyiz_kurulu", "daire"] = Field(..., description="Decision type: genel_kurul, temyiz_kurulu, or daire")
 ) -> SayistayUnifiedDocumentMarkdown:
     """Get Sayıştay decision document as Markdown for any decision type."""
     logger.info(f"Tool 'get_sayistay_document_unified' called for ID: {decision_id}, type: {decision_type}")
@@ -1611,8 +1611,8 @@ async def check_government_servers_health() -> Dict[str, Any]:
     }
 )
 async def search_kvkk_decisions(
-    keywords: str = Field(..., description="Turkish keywords. Supports +required -excluded \"exact phrase\" operators. Format: string (metin)"),
-    page: int = Field(1, ge=1, le=50, description="Page number for results (1-50). Format: integer (tam sayı)"),
+    keywords: str = Field(..., description="Turkish keywords. Supports +required -excluded \"exact phrase\" operators"),
+    page: int = Field(1, ge=1, le=50, description="Page number for results (1-50)."),
     # pageSize: int = Field(10, ge=1, le=20, description="Number of results per page (1-20).")
 ) -> KvkkSearchResult:
     """Search function for legal decisions."""
@@ -1650,8 +1650,8 @@ async def search_kvkk_decisions(
     }
 )
 async def get_kvkk_document_markdown(
-    decision_url: str = Field(..., description="KVKK decision URL from search results. Format: string (metin)"),
-    page_number: int = Field(1, ge=1, description="Page number for paginated Markdown content (1-indexed, accepts int). Default is 1 (first 5,000 characters). Format: integer (tam sayı)")
+    decision_url: str = Field(..., description="KVKK decision URL from search results"),
+    page_number: int = Field(1, ge=1, description="Page number for paginated Markdown content (1-indexed, accepts int). Default is 1 (first 5,000 characters).")
 ) -> KvkkDocumentMarkdown:
     """Get KVKK decision as paginated Markdown."""
     logger.info(f"KVKK document retrieval tool called for URL: {decision_url}")
@@ -1715,8 +1715,8 @@ async def get_kvkk_document_markdown(
     }
 )
 async def search_bddk_decisions(
-    keywords: str = Field(..., description="Search keywords in Turkish. Format: string (metin)"),
-    page: int = Field(1, ge=1, description="Page number. Format: integer (tam sayı)")
+    keywords: str = Field(..., description="Search keywords in Turkish"),
+    page: int = Field(1, ge=1, description="Page number")
     # pageSize: int = Field(10, ge=1, le=50, description="Results per page")
 ) -> dict:
     """Search BDDK banking regulation and supervision decisions."""
@@ -1767,8 +1767,8 @@ async def search_bddk_decisions(
     }
 )
 async def get_bddk_document_markdown(
-    document_id: str = Field(..., description="BDDK document ID (e.g., '310'). Format: string (metin)"),
-    page_number: int = Field(1, ge=1, description="Page number. Format: integer (tam sayı)")
+    document_id: str = Field(..., description="BDDK document ID (e.g., '310')"),
+    page_number: int = Field(1, ge=1, description="Page number")
 ) -> dict:
     """Retrieve BDDK decision document in Markdown format."""
     logger.info(f"BDDK document retrieval tool called for ID: {document_id}, page: {page_number}")
@@ -1859,7 +1859,7 @@ def get_preview_text(markdown_content: str, skip_chars: int = 100, preview_chars
     }
 )
 async def search(
-    query: str = Field(..., description="Turkish search query. Format: string (metin)")
+    query: str = Field(..., description="Turkish search query")
 ) -> Dict[str, List[Dict[str, str]]]:
     """
     Bedesten API search tool for ChatGPT Deep Research compatibility.
@@ -1992,7 +1992,7 @@ async def search(
     }
 )
 async def fetch(
-    id: str = Field(..., description="Document identifier from search results (numeric only). Format: string (metin)")
+    id: str = Field(..., description="Document identifier from search results (numeric only)")
 ) -> Dict[str, Any]:
     """
     Bedesten API fetch tool for ChatGPT Deep Research compatibility.
